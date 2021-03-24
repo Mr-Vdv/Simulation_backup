@@ -1,0 +1,15 @@
+# Schübler DS-82-DIA HST
+# 78N @ 25500rpm -> k_t0 = 1.70 (rho=1.225kg/m³)
+# Assuming V(T_25500=0) = 90m/s -> J(T=0) = 1.76
+
+diameter: 0.12
+mass: 0.3
+
+k_t: -0.97
+k_t0: 1.70
+k_q:  0
+k_q0: 0
+rolling_moment_coefficient: 0
+rotor_drag_coefficient: 0
+d_flow: 5
+

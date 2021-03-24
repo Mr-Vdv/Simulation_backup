@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="uav_name" default="techpod"/>
+  <arg name="namespace" default="$(arg uav_name)"/>
+  <arg name="aero_params_yaml_file" default="$(find rotors_gazebo)/resource/fixed_wing/aero_params_$(arg uav_name).yaml"/>
+  <arg name="vehicle_params_yaml_file" default="$(find rotors_gazebo)/resource/fixed_wing/$(arg uav_name).yaml"/>
+  <arg name="yaml_path" default="$(find rotors_gazebo)/resource/fixed_wing"/>
+  <arg name="is_input_joystick" default="false"/>
+  <arg name="model" default="$(find rotors_description)/urdf/$(arg uav_name)_base.xacro"/>
+  <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+  <arg name="x" default="10.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.1"/>
+  <arg name="R" default="0.0"/>
+  <arg name="P" default="0.0"/>
+  <arg name="Y" default="0.0"/>
+  <arg name="enable_logging" default="false"/>
+  <arg name="enable_ground_truth" default="true"/>
+  <arg name="log_file" default="$(arg uav_name)"/>
+  <arg name="wait_to_record_bag" default="false"/>
+  <arg name="enable_mavlink_interface" default="true"/>
+  <arg name="serial_device" default="/dev/ttyACM0"/>
+  <arg name="enable_wind" default="true"/>
+
+  <arg name="tracking_cam" default="$(find rotors_description)/urdf/tracking_cam.xacro"/>
+  <arg name="target_name" default="$(arg namespace)"/>
+  <arg name="target_link" default="$(arg namespace)/base_link"/>
+
+  <arg name="record_rosbag" default="false"/>
+  <arg name="rosbag_path" default=""/>
+
+  <!-- send the robot XML to param server -->
+  <param name="robot_description" command="
+    $(find xacro)/xacro.py '$(arg model)'
+    enable_logging:=$(arg enable_logging)
+    enable_ground_truth:=$(arg enable_ground_truth)
+    enable_mavlink_interface:=$(arg enable_mavlink_interface)
+    log_file:=$(arg log_file)
+    wait_to_record_bag:=$(arg wait_to_record_bag)
+    uav_name:=$(arg uav_name)
+    namespace:=$(arg namespace)
+    aero_params_yaml_file:=$(arg aero_params_yaml_file)
+    vehicle_params_yaml_file:=$(arg vehicle_params_yaml_file)
+    yaml_path:=$(arg yaml_path)
+    is_input_joystick:=$(arg is_input_joystick)
+    serial_device:=$(arg serial_device)
+    enable_wind:=$(arg enable_wind)"
+  />
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_$(arg namespace)" pkg="gazebo_ros" type="spawn_model"
+   args="-param robot_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -R $(arg R)
+         -P $(arg P)
+         -Y $(arg Y)
+         -model $(arg namespace)"
+   respawn="false" output="screen">
+  </node>
+
+  <node pkg="rosbag" type="record" name="trinocular"
+   args="-o $(arg rosbag_path)$(arg namespace)
+            /$(arg namespace)/cam_left/odometry
+            /$(arg namespace)/cam_left/image_raw
+            /$(arg namespace)/camImu0/data_raw
+            /$(arg namespace)/cam_center/odometry
+            /$(arg namespace)/cam_center/image_raw
+            /$(arg namespace)/adis/data_raw
+            /$(arg namespace)/cam_right/odometry
+            /$(arg namespace)/cam_right/image_raw
+            /$(arg namespace)/camImu1/data_raw"
+   if="$(arg record_rosbag)">
+  </node>
+
+</launch>

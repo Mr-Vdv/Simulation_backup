@@ -1,0 +1,17 @@
+# XOAR Beechwood Propeller 32"x12" 
+# 
+# Static thrust and torque from APC 27x13E at 4000rpm -> k_t0, k_q0
+# Adjusted (*12/13) zero-thrust advance ratio from APC 27x13E -> k_t (J_q0: 0.63)
+# Extrapolated and adjusted (*12/13) zero-torque advance ratio from APC 27x13E -> k_q (J_q0: 0.69)
+
+diameter: 0.8128
+mass: 0.325
+
+k_t: -0.132
+k_t0: 0.083
+k_q: 0 #-0.048
+k_q0: 0 # 0.033
+rolling_moment_coefficient: 1e-06
+rotor_drag_coefficient: 5e-04
+d_flow: 5
+

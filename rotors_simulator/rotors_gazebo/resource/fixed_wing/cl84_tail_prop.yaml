@@ -1,0 +1,15 @@
+# cl84 main-propeller parameters
+
+diameter: 0.16
+mass: 0.005
+
+k_t: -0.16
+k_t0: 0.12
+k_q: -0.0081
+k_q0: 0.006
+rolling_moment_coefficient: 1e-06
+rotor_drag_coefficient: 1.1829e-04
+d_flow: 5
+
+#To Do: approx calculation based on standard propeller characteristics (dia, pitch, profile?, No of blades)
+#       Load propeller data from e.g. APC database
