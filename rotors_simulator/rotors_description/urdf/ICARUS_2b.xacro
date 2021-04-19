@@ -32,9 +32,9 @@
   <xacro:property name="mass_elevator" value="0.05" /> <!-- [kg] 0.022-->
 
   <!-- Aileron properties -->
-  <xacro:property name="aileron_length" value="0.09" /> <!-- [m] 0.03-->
-  <xacro:property name="aileron_width" value="0.185" /> <!-- [m] 0.15-->
-  <xacro:property name="aileron_height" value="0.03" /> <!-- [m] 0.01-->
+  <xacro:property name="aileron_length" value="0.09" /> <!-- [m] -->
+  <xacro:property name="aileron_width" value="0.185" /> <!-- [m] -->
+  <xacro:property name="aileron_height" value="0.03" /> <!-- [m] -->
   <!-- <xacro:property name="aileron_min_angle" value="-0.349066" />  [rad] -->
   <!-- <xacro:property name="aileron_max_angle" value="0.349066" />  [rad]  -->
   <xacro:property name="aileron_color" value="Red" />
@@ -57,8 +57,7 @@
 
   <!-- Inertia of the elevator, assuming it is a cuboid -->
   <xacro:property name="elevator_inertia">
-    <xacro:box_inertia x="0.1" y="0.4" z="0.01" mass="${mass_elevator}"/> <!--Changed-->
-	<!-- <xacro:box_inertia x="${elevator_length}" y="${elevator_width}" z="${elevator_height}" mass="${mass_elevator}" />  -->
+	<xacro:box_inertia x="${elevator_length}" y="${elevator_width}" z="${elevator_height}" mass="${mass_elevator}" />
   </xacro:property>
 
   <!-- Servo PD controller paramters, tune after inertias of actuated links are set -->
@@ -81,8 +80,6 @@
   </xacro:property>
 
   <xacro:property name="distance_origin_ground" value="0.0" />
-  <xacro:property name="ram_eff" value="0.5" />
-  <xacro:property name="slip_eff" value="0.5" />
 
   <xacro:include filename="$(find rotors_description)/urdf/fixed_wing_X_base.xacro" />
 
@@ -90,7 +87,7 @@
   <link name="${namespace}/base_link">
       <inertial>
         <mass value="0.3" /> <!--changed from 0.8 -->
-        <inertia ixx="0.0035" ixy="0.0" ixz="0.01" iyy="0.0082" iyz="0.0" izz="0.0045" />
+	<inertia ixx="0.0035" ixy="0.0" ixz="0.01" iyy="0.0082" iyz="0.0" izz="0.0045" />
         <origin xyz="0 0 0" rpy="0 0 0" />
       </inertial>
       <visual>
@@ -157,9 +154,7 @@
   <link name="${namespace}/wing_left">
     <inertial>
       <mass value="0.1" />
-      <!--<inertia ixx="0.01" ixy="0.0" ixz="0.01" iyy="0.0" iyz="0.0" izz="0.01" />
-      <origin xyz="0 -0.060 0" rpy="0 0 0" /> -->
-      <inertia ixx="0.0273" ixy="0.0" ixz="0.0002" iyy="0.0009" iyz="0.0" izz="0.0278" /> 
+      <inertia ixx="0.0273" ixy="0.0" ixz="0.0002" iyy="0.0009" iyz="0.0" izz="0.0278" />
       <origin xyz="0 0 0" rpy="0 0 0" />
     </inertial>
     <visual>
@@ -171,7 +166,7 @@
     <collision>
         <origin xyz="-0.05 0.25 0" rpy="0 0 0" />
         <geometry>
-          <box size="0.05 0.35 0.01" />
+          <box size="0.1 0.35 0.01" />
         </geometry>
     </collision>
   </link>
@@ -190,8 +185,6 @@
   <link name="${namespace}/wing_right">
       <inertial>
         <mass value="0.1" />
-        <!-- <inertia ixx="0.01" ixy="0.0" ixz="0.01" iyy="0.0" iyz="0.0" izz="0.01" />
-        <origin xyz="0 0.060 0" rpy="0 0 0" /> -->
         <inertia ixx="0.0273" ixy="0.0" ixz="0.0002" iyy="0.0009" iyz="0.0" izz="0.0278" />
         <origin xyz="0 0 0" rpy="0 0 0" />
       </inertial>
@@ -204,7 +197,7 @@
       <collision>
         <origin xyz="-0.05 -0.25 0" rpy="0 0 0" />
         <geometry>
-          <box size="0.05 0.35 0.01" />
+          <box size="0.1 0.35 0.01" />
         </geometry>
     </collision>
   </link>
@@ -260,10 +253,9 @@
   </gazebo>
 
   <!-- Elevator -->
-
   <joint name="${namespace}/elevator_joint" type="revolute">
     <origin xyz="-0.465 0 0.0" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
+    <axis xyz="0 -1 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevator" />
     <limit upper="0.3" lower="-1.57" effort="50" velocity="50"/>
@@ -368,36 +360,6 @@
   <gazebo reference="${namespace}/propeller_back">
     <material>Gazebo/Orange</material>
   </gazebo>
-
-  <!--
-  <joint name="${namespace}/propeller_back_right_joint" type="continuous">
-    <origin xyz="0.0 -0.185 0" rpy="0 ${0.5*pi} 0" />
-    <axis xyz="0 0 1" />
-    <parent link="${namespace}/elevator" />
-    <child link="${namespace}/propeller_back_right" />
-  </joint>
-  <link name="${namespace}/propeller_back_right">
-    <inertial>
-      <mass value="0.01" />
-      <xacro:cylinder_inertia r="0.08" h="0.01" mass="0.01" />
-    </inertial>
-    <visual>
-      <origin xyz="0 0 0.04" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://rotors_description/meshes/IGNIS/ICARUS_2/iris_prop_ccw.dae" scale="0.6 0.6 0.6"/>
-      </geometry>
-    </visual>
-    <visual>
-      <origin xyz="0 0 0.03" rpy="0 0 0" />
-      <geometry>
-        <cylinder radius="0.01" length="0.01" />
-      </geometry>
-    </visual>
-  </link>
-  <gazebo reference="${namespace}/propeller_back_right">
-    <material>Gazebo/Orange</material>
-  </gazebo> 
-  -->
   
 
   <!-- propeller plugin -->
@@ -408,15 +370,14 @@
         <linkNameRef>${namespace}/wing_left</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <cp>0.080 0.140 -0.010</cp>			<!-- !!! -->
-        <axisPosRot>-0.9877 0 -0.1564</axisPosRot>
+        <axisPosRot>-1 0 0</axisPosRot>
         <turnDir>cw</turnDir>
         <speedRefTopic>propeller_front_left_ref</speedRefTopic>
-        <propParamsYAML>${yaml_path}/cl84b_main_prop.yaml</propParamsYAML> 
+        <propParamsYAML>${yaml_path}/ic2_main_prop.yaml</propParamsYAML> 
         <tauUp>0.075</tauUp>
         <tauDown>0.15</tauDown>
         <rdpsMax>2039</rdpsMax>
         <slpstrTopic>propeller_front_left_slpstr</slpstrTopic>
-        <ramEff>${ram_eff}</ramEff>
         <visTopic>propeller_front_left_vis</visTopic>
         <wind name="wind">
           <topic>wind_base_link</topic>
@@ -426,15 +387,14 @@
         <linkNameRef>${namespace}/wing_right</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <cp>0.080 -0.140 -0.010</cp>
-        <axisPosRot>0.9877 0 0.1564</axisPosRot>
+        <axisPosRot>1 0 0</axisPosRot>
         <turnDir>ccw</turnDir>
         <speedRefTopic>propeller_front_right_ref</speedRefTopic>
-        <propParamsYAML>${yaml_path}/cl84b_main_prop.yaml</propParamsYAML> 
+        <propParamsYAML>${yaml_path}/ic2_main_prop.yaml</propParamsYAML> 
         <tauUp>0.075</tauUp>
         <tauDown>0.15</tauDown>
         <rdpsMax>2039</rdpsMax>
         <slpstrTopic>propeller_front_right_slpstr</slpstrTopic>
-        <ramEff>${ram_eff}</ramEff>
         <visTopic>propeller_front_right_vis</visTopic>
         <wind name="wind">
           <topic>wind_base_link</topic>
@@ -447,37 +407,16 @@
         <axisPosRot>0 0 1</axisPosRot>
         <turnDir>ccw</turnDir>
         <speedRefTopic>propeller_back_ref</speedRefTopic>
-        <propParamsYAML>${yaml_path}/cl84b_tail_prop.yaml</propParamsYAML>
+        <propParamsYAML>${yaml_path}/cl84_tail_prop.yaml</propParamsYAML>
         <tauUp>0.05</tauUp>
         <tauDown>0.1</tauDown>
-	<rdpsMax>5183</rdpsMax>
+	<rdpsMax>5183</rdpsMax> <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
         <slpstrTopic>propeller_back_slpstr</slpstrTopic>
-        <ramEff>${ram_eff}</ramEff>
         <visTopic>propeller_back_vis</visTopic>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
       </prop>
-<!--
-      <prop name="propeller_back_right">
-        <linkNameRef>${namespace}/elevator</linkNameRef>
-        <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>-0.03 0 0.04</cp>
-        <axisPosRot>0 0 1</axisPosRot>
-        <turnDir>ccw</turnDir>
-        <speedRefTopic>propeller_back_right_ref</speedRefTopic>
-        <propParamsYAML>${yaml_path}/cl84b_tail_prop.yaml</propParamsYAML>
-        <tauUp>0.05</tauUp>
-        <tauDown>0.1</tauDown>
-        <rdpsMax>1410</rdpsMax>
-        <slpstrTopic>propeller_back_right_slpstr</slpstrTopic>
-        <ramEff>${ram_eff}</ramEff>
-        <visTopic>propeller_back_right_vis</visTopic>
-        <wind name="wind">
-          <topic>wind_base_link</topic>
-        </wind>
-      </prop>
--->
     </plugin>
   </gazebo>
 
@@ -489,12 +428,12 @@
       <aeroForcesVis>aero_force_vis_0</aeroForcesVis>
       <body>
         <element>
-          <aBdyXX>0.01125</aBdyXX>
-          <aBdyYY>0</aBdyYY>
-          <aBdyZZ>0</aBdyZZ>
+          <aBdyXX>0.012</aBdyXX>
+          <aBdyYY>0</aBdyYY>  <!-- 0.068 -->
+          <aBdyZZ>0</aBdyZZ> <!-- 0.077 -->
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>0.18 0.0 0.15</cp>
+	  <cp>0.0 0.0 0.0</cp>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
@@ -503,7 +442,7 @@
     </plugin>
   </gazebo>
 
-<!-- Why is the y-axis pointing negatively towards convention? -->
+
   <!-- aft wing L&D plugin -->
   <gazebo>
     <plugin filename="librotors_gazebo_aerodynamics_plugin.so" name="aerodynamics_plugin">
@@ -515,17 +454,13 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-0.39 0.1 0.0</cp>
+          <cp>-0.03 0.1 0.0</cp>
           <seg_area>0.0112</seg_area>
           <seg_chord>0.08</seg_chord>
-          <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+          <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
-          <!-- <indVel name="propeller_back">
-             <topic>propeller_back_slpstr</topic>
-             <eff>${slip_eff}</eff>
-          </indVel> -->
         </segment>
 
         <segment name="ER">
@@ -533,36 +468,21 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-0.39 -0.1 0.0</cp> 
+          <cp>-0.03 -0.1 0.0</cp> 
           <seg_area>0.0112</seg_area> 
           <seg_chord>0.08</seg_chord>
-          <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+          <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
-          <!-- <indVel name="propeller_back_right">
-             <topic>propeller_back_right_slpstr</topic>
-             <eff>${slip_eff}</eff>
-          </indVel> -->
         </segment>
 
-      </airfoil>
-    </plugin>
-  </gazebo>
-
-  <!-- horizontal stabilizer L&D plugin -->
-  <!--
-  <gazebo>
-    <plugin filename="librotors_gazebo_aerodynamics_plugin.so" name="aerodynamics_plugin">
-      <robotNamespace>${namespace}</robotNamespace>
-      <aeroForcesVis>aero_force_vis_1</aeroForcesVis>
-      <airfoil>
         <segment name="VS">
           <linkNameRef>${namespace}/base_link</linkNameRef>
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 1 0</upward>
-          <cp>-0.22 0 0.24</cp>
+          <cp>-0.41 0 0.1</cp>
           <seg_area>0.015</seg_area>
           <seg_chord>0.15</seg_chord>
           <aeroParamsYAML>${yaml_path}/cl84b_tail_airfoil.yaml</aeroParamsYAML>
@@ -570,10 +490,10 @@
             <topic>wind_base_link</topic>
           </wind>
         </segment>
+
       </airfoil>
     </plugin>
   </gazebo>
-  -->
 
   <!-- front wing L&D plugin -->
   <gazebo>
@@ -586,10 +506,10 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 0.1100 -0.005</cp>
+        <cp>-0.05 0.0500 -0.005</cp>
         <seg_area>0.020</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
@@ -599,16 +519,15 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 0.2225 -0.005</cp> 
+        <cp>-0.05 0.1625 -0.005</cp> 
         <seg_area>0.025</seg_area> 
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
         <indVel name="propeller_front_left">
            <topic>propeller_front_left_slpstr</topic>
-           <eff>${slip_eff}</eff>
         </indVel>
       </segment>
       <segment name="WL3">
@@ -616,14 +535,14 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 0.3475 -0.005</cp>
+        <cp>-0.05 0.2875 -0.005</cp>
         <seg_area>0.025</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>3</radToCLift> <!-- !!!!!!!!!!!!!!!!! -->
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -633,7 +552,6 @@
         </wind>
         <indVel name="propeller_front_left">
            <topic>propeller_front_left_slpstr</topic>
-           <eff>${slip_eff}</eff>
         </indVel>
       </segment>
       <segment name="WL4">
@@ -641,17 +559,17 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 0.4550 -0.005</cp>
+        <cp>-0.05 0.3950 -0.005</cp>
         <seg_area>0.018</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>3</radToCLift> <!-- !!!!!!!!!!!!!!!!!!!!!!! -->
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -662,10 +580,10 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 -0.0110 -0.005</cp>
+        <cp>-0.05 -0.0500 -0.005</cp>
         <seg_area>0.020</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
@@ -675,16 +593,15 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 -0.2225 -0.005</cp>
+        <cp>-0.05 -0.1625 -0.005</cp>
         <seg_area>0.025</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
         <indVel name="propeller_front_right">
            <topic>propeller_front_right_slpstr</topic>
-           <eff>${slip_eff}</eff>
         </indVel>
       </segment>
       <segment name="WR3">
@@ -692,14 +609,14 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 -0.3475 -0.005</cp>
+        <cp>-0.05 -0.2875 -0.005</cp>
         <seg_area>0.025</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>3</radToCLift> <!-- !!!!!!!!!!!!!!!!! -->
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -709,7 +626,6 @@
         </wind>
         <indVel name="propeller_front_right">
            <topic>propeller_front_right_slpstr</topic>
-           <eff>${slip_eff}</eff>
         </indVel>
       </segment>
       <segment name="WR4">
@@ -717,17 +633,17 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.01 -0.4550 -0.005</cp>
+        <cp>-0.05 -0.3950 -0.005</cp>
         <seg_area>0.018</seg_area>
         <seg_chord>0.20</seg_chord>
-        <aeroParamsYAML>${yaml_path}/cl84b_wing_airfoil.yaml</aeroParamsYAML>
+        <aeroParamsYAML>${yaml_path}/---ic2_wing_airfoil.yaml</aeroParamsYAML>
         <wind name="wind">
           <topic>wind_base_link</topic>
         </wind>
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>3</radToCLift> <!-- !!!!!!!!!!!!!!!!!!!!!!!!!! -->
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -771,7 +687,7 @@
         <channel name="propeller_front_left">
           <input_index>0</input_index>
           <input_offset>1</input_offset>
-          <input_scaling>505</input_scaling>
+          <input_scaling>1016</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>gz_msg</joint_control_type>
@@ -789,7 +705,7 @@
         <channel name="propeller_front_right">
           <input_index>1</input_index>
           <input_offset>1</input_offset>
-          <input_scaling>505</input_scaling>
+          <input_scaling>1016</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>gz_msg</joint_control_type>
@@ -807,7 +723,7 @@
         <channel name="propeller_back">
           <input_index>2</input_index>
           <input_offset>1</input_offset>
-          <input_scaling>705</input_scaling>
+          <input_scaling>2592</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>gz_msg</joint_control_type>
@@ -822,26 +738,6 @@
            <joint_control_type>velocity</joint_control_type>
            <joint_name>${namespace}/propeller_back_joint</joint_name>
         </channel>
-<!--
-        <channel name="propeller_back_right">
-          <input_index>2</input_index>
-          <input_offset>1</input_offset>
-          <input_scaling>705</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>gz_msg</joint_control_type>
-          <gztopic>propeller_back_right_ref</gztopic>
-        </channel>
-        <channel name="propeller_back_right_anim">
-           <input_index>2</input_index>
-           <input_offset>1</input_offset>
-           <input_scaling>20</input_scaling>
-           <zero_position_disarmed>0</zero_position_disarmed>
-           <zero_position_armed>0</zero_position_armed>
-           <joint_control_type>velocity</joint_control_type>
-           <joint_name>${namespace}/propeller_back_right_joint</joint_name>
-        </channel>
--->
         <channel name="aileron_left">
           <input_index>4</input_index>
           <input_offset>0</input_offset>
@@ -868,18 +764,6 @@
           <joint_name>${namespace}/aileron_right_joint</joint_name>
           <gztopic>aileron_right_pos</gztopic>
         </channel>
-        <!-- <channel name="elevator">
-          <input_index>6</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>-0.53</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>servo</joint_control_type>
-          <servo_params>
-            <xacro:insert_block name="elev_srv_params" />
-          </servo_params>
-          <joint_name>${namespace}/elevator_joint</joint_name>
-        </channel> -->
         <channel name="elevator">
           <input_index>6</input_index>
           <input_offset>0</input_offset>
