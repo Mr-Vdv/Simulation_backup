@@ -557,7 +557,7 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-1.335,0.1,-0.005</cp> <!-- !!! -->
+          <cp>0 0.25 -0.005</cp>
           <seg_area>0.06</seg_area>
           <seg_chord>0.1</seg_chord>
           <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML> <!-- !!! -->
@@ -570,7 +570,7 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-1.335,-0.1,-0.005</cp> <!-- !!! -->
+          <cp>0 -0.25 -0.005</cp>
           <seg_area>0.06</seg_area>
           <seg_chord>0.1</seg_chord>
           <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML> <!-- !!! -->
@@ -583,7 +583,7 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 1 0</upward>
-          <cp>-1.15,0.0,0.07</cp> <!-- !!! -->
+          <cp>-1.17 0.0 0.07</cp>
           <seg_area>0.0225</seg_area>
           <seg_chord>0.15</seg_chord>
           <aeroParamsYAML>${yaml_path}/Scintilla_tail_airfoil.yaml</aeroParamsYAML>
@@ -606,7 +606,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,1.0215, 0.0</cp>
+        <cp>0.0 1.0215 0.0</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -627,7 +627,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,0.7775, 0.0</cp>
+        <cp>0.0 0.7775 0.0</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -651,7 +651,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,0.5190, 0.0</cp>
+        <cp>0.0 0.5190 0.0</cp>
         <seg_area>0.012</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -672,7 +672,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,0.2605, 0.0</cp>
+        <cp>0.0 0.2605 0.0</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -696,7 +696,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0, 0.0165, 0.0</cp>
+        <cp>0.0 0.0165 0.0</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -717,7 +717,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0, -0.0165, 0.0</cp>
+        <cp>0.0 -0.0165 0.0</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -738,7 +738,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,-0.2605, 0.0</cp>
+        <cp>0.0 -0.2605 0.0</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -762,7 +762,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,-0.5190, 0.0</cp>
+        <cp>0.0 -0.5190 0.0</cp>
         <seg_area>0.012</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -783,7 +783,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,-0.7775, 0.0</cp>
+        <cp>0.0 -0.7775 0.0</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -807,7 +807,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0,-1.0215, 0.0</cp>
+        <cp>0.0 -1.0215 0.0</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
