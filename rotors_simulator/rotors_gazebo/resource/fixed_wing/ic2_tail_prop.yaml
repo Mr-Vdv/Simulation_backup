@@ -1,14 +1,14 @@
 # ICARUS 2 tail-propeller parameters
 
-diameter: 0.08 #0.08
-mass: 0.0016
+diameter: 0.08 # 0.16 --> David's Parameter // 0.08
+mass: 0.0016 # 0.005 --> David's Parameter // 0.0016
 
-k_t: -0.16
-k_t0: 0.25 #0.12
-k_q: -0.0081 #-0.01 
-k_q0: 0.006 #0.01
-rolling_moment_coefficient: 1e-06
-rotor_drag_coefficient: 1.1829e-04
+k_t: -0.16 # -0.16 --> David's Parameter
+k_t0: 0.70 # 0.12 --> David's Parameter // 0.30 berechnet
+k_q: 0 #-0.0081
+k_q0: 0 #0.006
+rolling_moment_coefficient: 0 #1e-06
+rotor_drag_coefficient: 0 #8e-05 #1.1829e-04
 d_flow: 5
 
 #To Do: approx calculation based on standard propeller characteristics (dia, pitch, profile?, No of blades)
