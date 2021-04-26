@@ -1,0 +1,15 @@
+# ICARUS 2 main-propeller parameters
+
+diameter: 0.4574 # 0.26 --> David's Parameter
+mass: 0.017 # 0.0125 --> David's Parameter
+
+k_t: -0.19 #-0.163
+k_t0: 0.14 #0.14 // berechnet 0.037
+k_q: 0 #-0.013
+k_q0: 0 #0.01
+rolling_moment_coefficient: 0 #1e-06
+rotor_drag_coefficient: 0 #4e-04 #5.3849e-04
+d_flow: 5
+
+#To Do: approx calculation based on standard propeller characteristics (dia, pitch, profile?, No of blades)
+#       Load propeller data from e.g. APC database
