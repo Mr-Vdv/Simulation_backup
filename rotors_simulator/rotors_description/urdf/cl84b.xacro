@@ -154,6 +154,25 @@
   <gazebo reference="${namespace}/wheels">
      <material>Gazebo/Grey</material>
   </gazebo>
+  <joint name="${namespace}/pitot" type="fixed">
+     <origin xyz="0.15 0 -0.08" rpy="0 0 0" />
+     <parent link="${namespace}/base_link" />
+     <child link="${namespace}/pitot" />
+  </joint>
+  <link name="${namespace}/pitot">
+     <inertial>
+        <mass value="0.001" />
+        <xacro:box_inertia x="0.001" y="0.001" z="0.001" mass="0.001" />
+     </inertial>
+     <visual>
+        <geometry>
+           <mesh filename="package://rotors_description/meshes/techpod_X_flex/pitot_tube.stl" scale="1 1 1" />
+        </geometry>
+     </visual>
+  </link>
+  <gazebo reference="${namespace}/pitot">
+     <material>Gazebo/Grey</material>
+  </gazebo>
 
   <!-- Wing -->
   <joint name="${namespace}/wing_joint" type="revolute">
@@ -425,16 +444,16 @@
         <robotNamespace>${namespace}</robotNamespace>
         <windLayer>
           <layer name="layer1">
-            <altitude>10</altitude>
-            <windMeanNED>-2 0 0</windMeanNED>
+            <altitude>0.5</altitude>
+            <windMeanNED>-3 -2 0</windMeanNED>
           </layer>
           <layer name="layer2">
             <altitude>25</altitude>
-            <windMeanNED>-3 0 0</windMeanNED>
+            <windMeanNED>-3 -2 0</windMeanNED>
           </layer>
           <layer name="layer3">
             <altitude>35</altitude>
-            <windMeanNED>-10 0 0</windMeanNED>
+            <windMeanNED>-3 -2 0</windMeanNED>
           </layer>
         </windLayer>
         <findWind>
@@ -443,11 +462,11 @@
             <windTopic>wind_base_link</windTopic>
           </query>
         </findWind>
-        <lambdaMin>10</lambdaMin>
+        <lambdaMin>5</lambdaMin>
         <lengthScale>725</lengthScale>
         <fourierNNN>7 7 7</fourierNNN>
-        <sigma>2</sigma>
-        <trnspVelTurbNED>5 0 0</trnspVelTurbNED>
+        <sigma>4</sigma>
+        <trnspVelTurbNED>-3 -2 0</trnspVelTurbNED>
       </plugin>
     </gazebo>
   </xacro:if>
@@ -755,6 +774,42 @@
     </plugin>
   </gazebo>
 
+  <!-- Flow angle vanes -->
+  <xacro:angle_vane robot_namespace="${namespace}"
+     vane_name="alpha_1"
+     type="alpha"
+     chord="0.02"
+     arm_cp="0.05"
+     mass_vane="0.02"
+     parent="${namespace}/base_link"
+     wind_topic="wind_base_link"
+     color="Grey">
+     <origin xyz="0.60 0.02 0.1" rpy="0 0 0" /><!-- Joint origin -->
+     <xacro:box_inertia x="0.1" y="0.02" z="0.02" mass="0.02" />
+  </xacro:angle_vane>
+
+  <xacro:angle_vane robot_namespace="${namespace}"
+     vane_name="beta_1"
+     type="beta"
+     chord="0.02"
+     arm_cp="0.05"
+     mass_vane="0.02"
+     parent="${namespace}/base_link"
+     wind_topic="wind_base_link"
+     color="Grey">
+     <origin xyz="0.60 0 0.12" rpy="0 0 0" /><!-- Joint origin -->
+     <xacro:box_inertia x="0.1" y="0.02" z="0.02" mass="0.02" />
+  </xacro:angle_vane>
+
+  <gazebo>
+     <plugin filename="librotors_gazebo_vane_plugin.so" name="alpha_1_vane_plugin">
+        <robotNamespace>${namespace}</robotNamespace>
+        <alphaJoint>${namespace}/alpha_1_joint</alphaJoint>
+        <betaJoint>${namespace}/beta_1_joint</betaJoint>
+        <vaneTopic>vanes</vaneTopic>
+     </plugin>
+  </gazebo>
+
   <gazebo>
     <plugin filename="librotors_gazebo_mavlink_interface.so" name="gazebo_mavlink_interface">
       <robotNamespace>${namespace}</robotNamespace>
@@ -765,6 +820,7 @@
       <gpsGtSubTopic>/gps_gt</gpsGtSubTopic>
       <lidarSubTopic>/lidar_lite_v3</lidarSubTopic>
       <opticalFlowSubTopic></opticalFlowSubTopic>
+      <vaneSubTopic>/vanes</vaneSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
       <mavlink_udp_port>14560</mavlink_udp_port>
       <serialEnabled>true</serialEnabled>
@@ -779,8 +835,8 @@
       <motorSpeedCommandPubTopic>/command/motor_speed_old</motorSpeedCommandPubTopic>
       <actuatorsPubTopic>/command/motor_speed</actuatorsPubTopic>
       <linkName>${namespace}/base_link</linkName> <!-- reference link frame for airspeed and baro alt-->
-      <pitotPos>0 0 0</pitotPos>           <!-- pitot position wrt reference link -->
-      <baroPos>0 0 0</baroPos>            <!-- baro position wrt reference link -->
+      <pitotPos>0.6 0 0.1</pitotPos>                  <!-- pitot position wrt reference link -->
+      <baroPos>0.3 0 0.1</baroPos>                    <!-- baro position wrt reference link -->
       <wind name="wind">                          <!-- include wind in airspeed measurement -->
         <topic>wind_base_link</topic>
       </wind>
@@ -926,7 +982,7 @@
            <xacro:insert_block name="wing_srv_params" />
          </servo_params>
          <joint_name>${namespace}/wing_joint</joint_name>
-      </channel><!---->
+      </channel>
     </control_channels>
   </plugin>
   </gazebo>

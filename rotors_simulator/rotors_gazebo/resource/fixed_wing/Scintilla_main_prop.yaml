@@ -4,7 +4,7 @@ diameter: 0.4574 # 0.26 --> David's Parameter
 mass: 0.017 # 0.0125 --> David's Parameter
 
 k_t: -0.19 #-0.163
-k_t0: 0.14 #0.14 // berechnet 0.037
+k_t0: 0.0776 #0.14 // berechnet 0.077564
 k_q: 0 #-0.013
 k_q0: 0 #0.01
 rolling_moment_coefficient: 0 #1e-06
