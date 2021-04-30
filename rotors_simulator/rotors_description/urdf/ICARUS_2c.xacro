@@ -82,7 +82,7 @@
   <!-- Fuselage -->
   <link name="${namespace}/base_link">
       <inertial>
-        <origin xyz="-0.01 0 -0.025" rpy="0 0 0" /> <!-- CG has to be in these coordinates -->
+        <origin xyz="0.048 0 -0.025" rpy="0 0 0" /> <!-- With the current weights it should be 0.048 0 -0.025 -->
         <mass value="1.0" />
         <inertia ixx="0.0033" ixy="0.0" ixz="0.0" iyy="0.0473" iyz="0.0" izz="0.0472" />
         <!-- <xacro:box_inertia x="0.65" y="0.12" z="0.1" mass="1.0" /> -->
@@ -321,7 +321,7 @@
   </gazebo>
 
   <joint name="${namespace}/propeller_back_joint" type="continuous">
-    <origin xyz="-0.53 0 0" rpy="0 0 0" />
+    <origin xyz="-0.43 0 0" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/propeller_back" />
@@ -329,7 +329,7 @@
   <link name="${namespace}/propeller_back">
     <inertial>
       <mass value="0.1" />
-      <xacro:cylinder_inertia r="0.08" h="0.01" mass="0.01" />
+      <xacro:cylinder_inertia r="0.08" h="0.01" mass="0.1" />
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -355,7 +355,7 @@
       <prop name="propeller_front_left">
         <linkNameRef>${namespace}/wing_left</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>0.08 0.225 0</cp>			<!-- !!! -->
+        <cp>0.08 0.225 0</cp>
         <axisPosRot>-1 0 0</axisPosRot>
         <turnDir>cw</turnDir>
         <speedRefTopic>propeller_front_left_ref</speedRefTopic>

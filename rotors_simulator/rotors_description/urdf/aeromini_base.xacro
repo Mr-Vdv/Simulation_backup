@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2019 David Rohr, ASL, ETH Zurich, Switzerland
+  Copyright 2021 David Rohr, ASL, ETH Zurich, Switzerland
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,24 +15,19 @@
   limitations under the License.
 -->
 
-<robot name="SCINTILLA_01" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="aeromini" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find rotors_description)/urdf/component_snippets.xacro" />
 
   <!-- Instantiate fixed wing "mechanics" -->
-  <xacro:include filename="$(find rotors_description)/urdf/SCINTILLA_01.xacro" />
+  <xacro:include filename="$(find rotors_description)/urdf/aeromini.xacro" />
 
   <!-- Mount an ADIS16448 IMU. -->
   <xacro:default_imu namespace="${namespace}" parent_link="${namespace}/base_link" >
-    <origin xyz="-0.45 0 0.065" rpy="0 0 0" />  <!-- !!! Where our Pixhawk lies-->
+    <origin xyz="0.14 -0.01 0.07" rpy="0 0 0" />
   </xacro:default_imu>
 
   <!-- Mount a GPS.-->
-  <!--<xacro:default_gps
-    namespace="${namespace}"
-    parent_link="${namespace}/base_link">
-    <origin xyz="0 0 0" rpy="0 0 0" />
-  </xacro:default_gps>-->
   <xacro:gps_plugin_macro
     namespace="${namespace}"
     gps_suffix=""
@@ -46,8 +41,9 @@
     vertical_vel_std_dev="0.0"
     enable_delay = "false">
     <xacro:cube_inertia l="0.02" mass="0.015" />
-    <origin xyz="-0.417 0 0" rpy="0 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:gps_plugin_macro>
+
   <xacro:gps_plugin_macro
     namespace="${namespace}"
     gps_suffix="_gt"
@@ -61,9 +57,17 @@
     vertical_vel_std_dev="0.0"
     enable_delay = "false">
     <xacro:cube_inertia l="0.02" mass="0.001" />
-    <origin xyz="-0.417 0 0" rpy="0 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:gps_plugin_macro>
 
+  <xacro:default_camera
+    namespace="${namespace}"
+    parent_link="${namespace}/base_link"
+    camera_suffix="cam_front">
+    <origin xyz="-0.2 0.10 0.0" rpy="0 0 1.4" />
+  </xacro:default_camera>
+
+  <!--
   <xacro:camera_macro_2
     namespace="${namespace}"
     parent_link="${namespace}/base_link"
@@ -81,7 +85,7 @@
     enable_visual="false">
     <mesh filename="package://rotors_description/meshes/vi_camera.dae" scale="1 1 1" />
     <xacro:cube_inertia l="0.02" mass="0.01" />
-    <origin xyz="-0.417 0 0" rpy="0 0.2 0" />
-  </xacro:camera_macro_2>
+    <origin xyz="-2 0 0.5" rpy="0 0.2 0" />
+  </xacro:camera_macro_2>-->
 
 </robot>
