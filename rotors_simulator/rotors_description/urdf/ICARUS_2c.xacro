@@ -61,8 +61,8 @@
   <!-- Servo PD controller paramters, tune after inertias of actuated links are set -->
   <xacro:property name="ail_srv_params">
     <slew>5</slew>
-    <p>0.0004</p>
-    <d>0.00002</d>
+    <p>0.00004</p>
+    <d>0.002</d>
   </xacro:property>
 
   <xacro:property name="elev_srv_params">
@@ -242,7 +242,7 @@
     <axis xyz="0 -1 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevator" />
-    <limit upper="0.3" lower="-1.57" effort="50" velocity="50"/>
+    <limit upper="0.53" lower="-0.53" effort="50" velocity="50"/>
   </joint>
   <link name="${namespace}/elevator">
     <inertial>
@@ -751,7 +751,7 @@
         <channel name="elevator">
           <input_index>6</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>-1.57</input_scaling>
+          <input_scaling>-0.53</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>servo</joint_control_type>
