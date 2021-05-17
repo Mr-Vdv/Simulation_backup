@@ -85,9 +85,9 @@
   <!-- Fuselage - Ineritas and Masses need to be checked -->
   <link name="${namespace}/base_link">
       <inertial>
-        <mass value="6.64" />
+        <mass value="8.26" />
         <inertia ixx="0.044958" ixy="0.002614" ixz="0.019172" iyy="0.254345" iyz="0.000036" izz="0.233503" />
-        <origin xyz="-0.37 0 0" rpy="0 0 0" /> <!-- -0.33 -->
+        <origin xyz="-0.346 0 -0.021" rpy="0 0 0" /> <!-- -0.346 for 8.26kg // -0.33 for 6.64kg -->
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi/2}" />
@@ -110,9 +110,9 @@
   <joint name="${namespace}/wing_left_joint" type="revolute">
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/wing_left" />
-    <origin xyz="-0.377 0.12 0.114" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-    <limit upper="0.0" lower="-1.57" effort="10" velocity="20"/>
+    <origin xyz="-0.377 0.12 0.114" rpy="0 -0.7854 0" />
+    <axis xyz="0 -1 0" />
+    <limit upper="0.7854" lower="-0.7854" effort="10" velocity="20"/>
     <dynamics damping="0.2" friction="0" />
   </joint>
   <link name="${namespace}/wing_left">
@@ -141,9 +141,9 @@
   <joint name="${namespace}/wing_right_joint" type="revolute">
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/wing_right" />
-    <origin xyz="-0.377 -0.12 0.114" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-    <limit upper="0.0" lower="-1.57" effort="10" velocity="20"/>
+    <origin xyz="-0.377 -0.12 0.114" rpy="0 -0.7854 0" />
+    <axis xyz="0 -1 0" />
+    <limit upper="0.7854" lower="-0.7854" effort="10" velocity="20"/>
     <dynamics damping="0.2" friction="0" />
   </joint>
   <link name="${namespace}/wing_right">
@@ -175,7 +175,7 @@
     <axis xyz="0 -1 0" />
     <parent link="${namespace}/wing_left" />
     <child link="${namespace}/aileron_left" />
-    <limit upper="0.53" lower="-0.53" effort="10" velocity="20"/>
+    <limit upper="0.192" lower="-0.192" effort="10" velocity="20"/>
   </joint>
   <link name="${namespace}/aileron_left">
     <inertial>
@@ -198,7 +198,7 @@
     <axis xyz="0 -1 0" />
     <parent link="${namespace}/wing_right" />
     <child link="${namespace}/aileron_right" />
-    <limit upper="0.53" lower="-0.53" effort="10" velocity="20"/>
+    <limit upper="0.192" lower="-0.192" effort="10" velocity="20"/>
   </joint>
   <link name="${namespace}/aileron_right">
     <inertial>
@@ -266,7 +266,7 @@
 
   <!-- Elevator -->
   <joint name="${namespace}/elevator_joint" type="revolute">
-    <origin xyz="-1.335 0 0.0" rpy="0 0 0" />
+    <origin xyz="-1.347 0 0.0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevator" />
@@ -278,7 +278,7 @@
       <xacro:insert_block name="elevator_inertia" />
     </inertial>
     <visual>
-      <origin xyz="1.335 0 0" rpy="0 0 ${pi/2}" />
+      <origin xyz="1.347 0 0" rpy="0 0 ${pi/2}" />
       <geometry>
           <mesh filename="package://rotors_description/meshes/IGNIS/SCINTILLA/Elevator.stl" scale="0.001 0.001 0.001" />
       </geometry>
@@ -290,7 +290,7 @@
 
   <!-- Propellers -->
   <joint name="${namespace}/propeller_front_left_left_joint" type="continuous">
-    <origin xyz="0.087 0.778 0" rpy="0 ${0.5*pi} 0" />
+    <origin xyz="0.126 0.778 -0.019" rpy="0 ${0.5*pi} 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/wing_left" />
     <child link="${namespace}/propeller_front_left_left" />
@@ -318,7 +318,7 @@
   </gazebo>
 
   <joint name="${namespace}/propeller_front_left_joint" type="continuous">
-    <origin xyz="0.087 0.261 0" rpy="0 ${0.5*pi} 0" />
+    <origin xyz="0.126 0.261 -0.019" rpy="0 ${0.5*pi} 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/wing_left" />
     <child link="${namespace}/propeller_front_left" />
@@ -346,7 +346,7 @@
   </gazebo>
 
   <joint name="${namespace}/propeller_front_right_joint" type="continuous">
-    <origin xyz="0.087 -0.261 0" rpy="0 ${0.5*pi} 0" />
+    <origin xyz="0.126 -0.261 -0.019" rpy="0 ${0.5*pi} 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/wing_right" />
     <child link="${namespace}/propeller_front_right" />
@@ -374,7 +374,7 @@
   </gazebo>
 
   <joint name="${namespace}/propeller_front_right_right_joint" type="continuous">
-    <origin xyz="0.087 -0.778 0" rpy="0 ${0.5*pi} 0" />
+    <origin xyz="0.126 -0.778 -0.019" rpy="0 ${0.5*pi} 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/wing_right" />
     <child link="${namespace}/propeller_front_right_right" />
@@ -402,7 +402,7 @@
   </gazebo>
 
   <joint name="${namespace}/propeller_back_joint" type="continuous">
-    <origin xyz="-1.39 0 0.02" rpy="0 0 0" />
+    <origin xyz="-1.39 0 0.053" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/propeller_back" />
@@ -437,7 +437,7 @@
       <prop name="propeller_front_left_left">
         <linkNameRef>${namespace}/wing_left</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>0.087 0.778 0</cp>
+        <cp>0.126 0.778 -0.019</cp>
         <axisPosRot>-1 0 0</axisPosRot>
         <turnDir>cw</turnDir>
         <speedRefTopic>propeller_front_left_left_ref</speedRefTopic>
@@ -454,7 +454,7 @@
       <prop name="propeller_front_left">
         <linkNameRef>${namespace}/wing_left</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>0.087 0.261 0</cp>
+        <cp>0.126 0.261 -0.019</cp>
         <axisPosRot>1 0 0</axisPosRot>
         <turnDir>ccw</turnDir>
         <speedRefTopic>propeller_front_left_ref</speedRefTopic>
@@ -471,7 +471,7 @@
       <prop name="propeller_front_right">
         <linkNameRef>${namespace}/wing_right</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>0.087 -0.261 0</cp>
+        <cp>0.126 -0.261 -0.019</cp>
         <axisPosRot>-1 0 0</axisPosRot>
         <turnDir>cw</turnDir>
         <speedRefTopic>propeller_front_right_ref</speedRefTopic>
@@ -488,7 +488,7 @@
       <prop name="propeller_front_right_right">
         <linkNameRef>${namespace}/wing_right</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>0.087 -0.778 0</cp>
+        <cp>0.126 -0.778 -0.019</cp>
         <axisPosRot>1 0 0</axisPosRot>
         <turnDir>ccw</turnDir>
         <speedRefTopic>propeller_front_right_right_ref</speedRefTopic>
@@ -505,9 +505,9 @@
       <prop name="propeller_back">
         <linkNameRef>${namespace}/base_link</linkNameRef>
         <linkNameAct>${namespace}/base_link</linkNameAct>
-        <cp>-1.39 0 0.02</cp>
+        <cp>-1.39 0 0.053</cp>
         <axisPosRot>0 0 1</axisPosRot>
-        <turnDir>ccw</turnDir> <!-- !!! -->
+        <turnDir>ccw</turnDir>
         <speedRefTopic>propeller_back_ref</speedRefTopic>
         <propParamsYAML>${yaml_path}/Scintilla_tail_prop.yaml</propParamsYAML>
         <tauUp>0.05</tauUp>
@@ -535,7 +535,7 @@
           <aBdyZZ>0.190</aBdyZZ>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-0.417 0.0 -0.008</cp>
+          <cp>-0.417 0.0 -0.008</cp> 
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
@@ -557,9 +557,9 @@
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
           <cp>0 0.25 -0.005</cp>
-          <seg_area>0.06</seg_area>
+          <seg_area>0.03</seg_area>
           <seg_chord>0.1</seg_chord>
-          <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML> <!-- !!! -->
+          <aeroParamsYAML>${yaml_path}/Scintilla_tail_airfoil.yaml</aeroParamsYAML>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
@@ -570,9 +570,9 @@
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
           <cp>0 -0.25 -0.005</cp>
-          <seg_area>0.06</seg_area>
+          <seg_area>0.03</seg_area>
           <seg_chord>0.1</seg_chord>
-          <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML> <!-- !!! -->
+          <aeroParamsYAML>${yaml_path}/Scintilla_tail_airfoil.yaml</aeroParamsYAML>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>
@@ -582,7 +582,7 @@
           <linkNameAct>${namespace}/base_link</linkNameAct>
           <forward>1 0 0</forward>
           <upward>0 1 0</upward>
-          <cp>-1.17 0.0 0.07</cp>
+          <cp>-1.25 0.0 0.07</cp>
           <seg_area>0.0225</seg_area>
           <seg_chord>0.15</seg_chord>
           <aeroParamsYAML>${yaml_path}/Scintilla_tail_airfoil.yaml</aeroParamsYAML>
@@ -605,7 +605,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 1.0215 0.0</cp>
+        <cp>0.0173 1.0215 -0.01</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -626,7 +626,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 0.7775 0.0</cp>
+        <cp>0.0173 0.7775 -0.01</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -650,7 +650,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 0.5190 0.0</cp>
+        <cp>0.0173 0.5190 -0.01</cp>
         <seg_area>0.012</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -671,7 +671,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 0.2605 0.0</cp>
+        <cp>0.0173 0.2605 -0.01</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -695,7 +695,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 0.0165 0.0</cp>
+        <cp>0.0173 0.0165 -0.01</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -716,7 +716,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 -0.0165 0.0</cp>
+        <cp>0.0173 -0.0165 -0.01</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -737,7 +737,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 -0.2605 0.0</cp>
+        <cp>0.0173 -0.2605 -0.01</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -761,7 +761,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 -0.5190 0.0</cp>
+        <cp>0.0173 -0.5190 -0.01</cp>
         <seg_area>0.012</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -782,7 +782,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 -0.7775 0.0</cp>
+        <cp>0.0173 -0.7775 -0.01</cp>
         <seg_area>0.095</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -806,7 +806,7 @@
         <linkNameAct>${namespace}/base_link</linkNameAct>
         <forward>1 0 0</forward>
         <upward>0 0 1</upward>
-        <cp>0.0 -1.0215 0.0</cp>
+        <cp>0.0173 -1.0215 -0.01</cp>
         <seg_area>0.006</seg_area>
         <seg_chord>0.208</seg_chord>
         <aeroParamsYAML>${yaml_path}/Scintilla_wing_airfoil.yaml</aeroParamsYAML>
@@ -851,8 +851,8 @@
       <motorSpeedCommandPubTopic>/command/motor_speed_old</motorSpeedCommandPubTopic>
       <actuatorsPubTopic>/command/motor_speed</actuatorsPubTopic>
       <linkName>${namespace}/base_link</linkName> <!-- reference link frame for airspeed and baro alt-->
-      <pitotPos>0 0 0</pitotPos>           <!-- pitot position wrt reference link -->
-      <baroPos>0 0 0</baroPos>            <!-- baro position wrt reference link -->
+      <pitotPos>-0.417 0.0 -0.008</pitotPos>           <!-- pitot position wrt reference link -->
+      <baroPos>-0.417 0.0 -0.008</baroPos>            <!-- baro position wrt reference link -->
       <wind name="wind">                          <!-- include wind in airspeed measurement -->
         <topic>wind_base_link</topic>
       </wind>
@@ -950,8 +950,8 @@
 
         <channel name="wing_left">
            <input_index>8</input_index>
-           <input_offset>1</input_offset>
-           <input_scaling>-${1.57*0.5}</input_scaling>
+           <input_offset>0</input_offset>
+           <input_scaling>0.7854</input_scaling>
            <zero_position_disarmed>0</zero_position_disarmed>
            <zero_position_armed>0</zero_position_armed>
            <joint_control_type>servo</joint_control_type>
@@ -962,8 +962,8 @@
         </channel>
         <channel name="wing_right">
            <input_index>8</input_index>
-           <input_offset>1</input_offset>
-           <input_scaling>-${1.57*0.5}</input_scaling>
+           <input_offset>0</input_offset>
+           <input_scaling>0.7854</input_scaling>
            <zero_position_disarmed>0</zero_position_disarmed>
            <zero_position_armed>0</zero_position_armed>
            <joint_control_type>servo</joint_control_type>
@@ -976,7 +976,7 @@
         <channel name="aileron_left">
           <input_index>9</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>-0.53</input_scaling>
+          <input_scaling>-0.192</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>servo</joint_control_type>
@@ -989,7 +989,7 @@
         <channel name="aileron_right">
           <input_index>10</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>0.53</input_scaling>
+          <input_scaling>0.192</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>servo</joint_control_type>
