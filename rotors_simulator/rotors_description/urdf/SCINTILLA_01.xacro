@@ -87,7 +87,7 @@
       <inertial>
         <mass value="8.26" />
         <inertia ixx="0.044958" ixy="0.002614" ixz="0.019172" iyy="0.254345" iyz="0.000036" izz="0.233503" />
-        <origin xyz="-0.346 0 -0.021" rpy="0 0 0" /> <!-- -0.346 for 8.26kg // -0.33 for 6.64kg -->
+        <origin xyz="-0.346 0 -0.02" rpy="0 0 0" /> <!-- -0.346 0 -0.0196 for 8.26kg // -0.33 0 -0.0224 for 6.64kg -->
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi/2}" />
@@ -535,7 +535,7 @@
           <aBdyZZ>0.190</aBdyZZ>
           <forward>1 0 0</forward>
           <upward>0 0 1</upward>
-          <cp>-0.417 0.0 -0.008</cp> 
+          <cp>-0.417 0.0 -0.008</cp>
           <wind name="wind">
             <topic>wind_base_link</topic>
           </wind>

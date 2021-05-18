@@ -46,7 +46,7 @@
     vertical_vel_std_dev="0.0"
     enable_delay = "false">
     <xacro:cube_inertia l="0.02" mass="0.015" />
-    <origin xyz="-0.417 0 0" rpy="0 0 0" />
+    <origin xyz="-0.417 0 -0.008" rpy="0 0 0" />
   </xacro:gps_plugin_macro>
   <xacro:gps_plugin_macro
     namespace="${namespace}"
@@ -61,7 +61,7 @@
     vertical_vel_std_dev="0.0"
     enable_delay = "false">
     <xacro:cube_inertia l="0.02" mass="0.001" />
-    <origin xyz="-0.417 0 0" rpy="0 0 0" />
+    <origin xyz="-0.417 0 -0.008" rpy="0 0 0" />
   </xacro:gps_plugin_macro>
 
   <xacro:camera_macro_2
@@ -81,7 +81,7 @@
     enable_visual="false">
     <mesh filename="package://rotors_description/meshes/vi_camera.dae" scale="1 1 1" />
     <xacro:cube_inertia l="0.02" mass="0.01" />
-    <origin xyz="-0.417 0 0" rpy="0 0.2 0" />
+    <origin xyz="-0.417 0 -0.008" rpy="0 0 0" />
   </xacro:camera_macro_2>
 
 </robot>
