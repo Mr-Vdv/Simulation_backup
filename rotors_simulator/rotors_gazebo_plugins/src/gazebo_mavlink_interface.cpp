@@ -1312,10 +1312,6 @@ void GazeboMavlinkInterface::handle_control(double _dt)
         if (isnan(rate_ref))
             rate_ref = 0.0;
 
-        channels[i].srv.ref = ignition::math::clamp(channels[i].srv.ref,
-                                                    -abs(channels[i].input_scaling_),
-                                                    +abs(channels[i].input_scaling_));
-
         double err_pos = channels[i].srv.ref-pos;
         double err_vel = rate_ref-rate;
         double torque = channels[i].srv.P_pos*err_pos + channels[i].srv.P_vel*err_vel;

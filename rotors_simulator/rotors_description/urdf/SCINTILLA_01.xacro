@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 2016 Pavel Vechersky, ASL, ETH Zurich, Switzerland
+  Copyright 2016 Pavel Vechersky, ASL, ETH Zurich, Switzerland !!!
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -82,12 +82,12 @@
 
   <xacro:include filename="$(find rotors_description)/urdf/fixed_wing_X_base.xacro" />
 
-  <!-- Fuselage - Ineritas and Masses need to be checked -->
+  <!-- Fuselage -->
   <link name="${namespace}/base_link">
       <inertial>
         <mass value="8.26" />
         <inertia ixx="0.044958" ixy="0.002614" ixz="0.019172" iyy="0.254345" iyz="0.000036" izz="0.233503" />
-        <origin xyz="-0.346 0 -0.02" rpy="0 0 0" /> <!-- -0.346 0 -0.0196 for 8.26kg // -0.33 0 -0.0224 for 6.64kg -->
+        <origin xyz="-0.346 0 -0.02" rpy="0 0 0" /> <!-- -0.346 0 -0.0196 for 8.26kg / -0.353 for CG shift of -0.005 // -0.33 0 -0.0224 for 6.64kg -->
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi/2}" />
@@ -549,7 +549,7 @@
   <gazebo>
     <plugin filename="librotors_gazebo_aerodynamics_plugin.so" name="aerodynamics_plugin">
       <robotNamespace>${namespace}</robotNamespace>
-      <aeroForcesVis>aero_force_vis_1</aeroForcesVis>
+      <aeroForcesVis>aero_force_vis_tail</aeroForcesVis>
       <airfoil>
         <segment name="EL">
           <linkNameRef>${namespace}/elevator</linkNameRef>
@@ -598,7 +598,7 @@
   <gazebo>
     <plugin filename="librotors_gazebo_aerodynamics_plugin.so" name="aerodynamics_plugin">
       <robotNamespace>${namespace}</robotNamespace>
-      <aeroForcesVis>aero_force_vis_1</aeroForcesVis>
+      <aeroForcesVis>aero_force_vis_wing</aeroForcesVis>
       <airfoil>
       <segment name="WL1">
         <linkNameRef>${namespace}/wing_left</linkNameRef>
@@ -615,7 +615,7 @@
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -633,7 +633,7 @@
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -660,7 +660,7 @@
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -678,7 +678,7 @@
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -705,7 +705,7 @@
         <control>
           <cs name="aileron_left">
               <controlJoint>${namespace}/aileron_left_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -726,7 +726,7 @@
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -744,7 +744,7 @@
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -771,7 +771,7 @@
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -789,7 +789,7 @@
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -816,7 +816,7 @@
         <control>
           <cs name="aileron_right">
               <controlJoint>${namespace}/aileron_right_joint</controlJoint>
-              <radToCLift>2</radToCLift>
+              <radToCLift>1.2</radToCLift>
               <radToCDrag>0.0</radToCDrag>
               <radToCPitch>0.0</radToCPitch>
           </cs>
@@ -1003,7 +1003,7 @@
         <channel name="elevator">
           <input_index>11</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>-0.53</input_scaling>
+          <input_scaling>0.53</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
           <joint_control_type>servo</joint_control_type>

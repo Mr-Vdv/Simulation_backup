@@ -654,16 +654,28 @@ void GazeboAerodynamics::OnUpdate()
 
             // form mixing weight to combine pre- and post-stall models
             double w_af;
+            /* // cosine mixing
             if(alpha>segments_[i].aero_params.alpha_max_ns + segments_[i].aero_params.alpha_blend + d_alpha_max_ns)
-                w_af = 0.0;
+              w_af = 0.0;
             else if(alpha>segments_[i].aero_params.alpha_max_ns + d_alpha_max_ns)
-                w_af = 0.5+0.5*cos(M_PI*(alpha - segments_[i].aero_params.alpha_max_ns)/segments_[i].aero_params.alpha_blend);
+              w_af = 0.5+0.5*cos(M_PI*(alpha - segments_[i].aero_params.alpha_max_ns)/segments_[i].aero_params.alpha_blend);
             else if(alpha>segments_[i].aero_params.alpha_min_ns + d_alpha_max_ns)
-                w_af = 1.0;
+              w_af = 1.0;
             else if(alpha>segments_[i].aero_params.alpha_min_ns - segments_[i].aero_params.alpha_blend + d_alpha_max_ns)
-                w_af = 0.5+0.5*cos(M_PI*(segments_[i].aero_params.alpha_min_ns-alpha)/segments_[i].aero_params.alpha_blend);
+              w_af = 0.5+0.5*cos(M_PI*(segments_[i].aero_params.alpha_min_ns-alpha)/segments_[i].aero_params.alpha_blend);
             else
-                w_af = 0.0;
+              w_af = 0.0;*/
+
+            // sigmoid mixing
+            const double a_l = -8.0/segments_[i].aero_params.alpha_blend;
+            const double a_u = -8.0/segments_[i].aero_params.alpha_blend;
+            const double b_l = -(segments_[i].aero_params.alpha_min_ns + d_alpha_max_ns) + 0.5*segments_[i].aero_params.alpha_blend;
+            const double b_u = -(segments_[i].aero_params.alpha_max_ns + d_alpha_max_ns) - 0.5*segments_[i].aero_params.alpha_blend;
+            const double exp_l = exp(a_l*(alpha + b_l));
+            const double exp_u = exp(a_u*(alpha + b_u));
+            const double sigm_l = 1.0/(1.0 + exp_l);
+            const double sigm_u = 1.0/(1.0 + exp_u);
+            w_af = sigm_l * (1 - sigm_u);
 
             // form weighted sum of pre-stall and post_stall (flat-plate) contributions to aerodynamic coefficients
             double cl = w_af*cl_af+(1-w_af)*cl_fp;
